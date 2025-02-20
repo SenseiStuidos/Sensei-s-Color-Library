@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sense's Color Library</title>
+    <link rel="icon" href="logo.png">
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #2f3136;
+            color: #dcddde;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+    /* Style for the .btn (the link) */
+    .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            text-align: center;
+            font-size: 18px;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            background: linear-gradient(45deg, rgb(255, 204, 0), rgb(217, 255, 0));
+            box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        /* Hover Animation */
+        .btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(45deg, rgb(255, 234, 0), rgb(242, 255, 0));
+        }
+
+        /* Active state (when clicked) */
+        .btn:active {
+            transform: scale(1);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
+        }
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        h1 {
+            background: linear-gradient(to right, #e74c3c, #3498db);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2.5em;
+            text-align: center;
+        }
+
+        .color-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 5px;
+            width: 95%;
+            max-width: 1200px;
+        }
+
+        .color-box {
+            aspect-ratio: 1/1;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease;
+            border: none;
+        }
+
+        .color-box:hover {
+            transform: scale(1.05);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+        }
+
+        @media (max-width: 500px) {
+            h1 {
+                font-size: 1.5em;
+            }
+        }
+        .logo {
+            position: absolute; /* Position the logo absolutely */
+            top: 20px; /* Distance from the top */
+            left: 20px; /* Distance from the left */
+            border-radius:40px;
+            width: 80px; /* Default width */
+            height: auto; /* Maintain aspect ratio */
+            animation: riseUp 0.5s ease-out; /* Rise-up animation */
+        }
+
+        @media (max-width: 600px) {
+            .logo {
+                width: 60px; /* Smaller logo for mobile */
+            }
+        }
+        @media (max-width: 417px) {
+            .logo {
+                visibility: hidden;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <img src="logo.png" alt="Logo" class="logo">
+    <div class="header">
+        <h1>Sense's Color Library</h1>
+        <h1>Find 100K+ Colors Shades</h1>
+        <a href="color preview/index.html" class="btn">See Preview</a>
+    </div>
+
+    <div class="color-container"></div>
+
+    <script>
+        const colorContainer = document.querySelector('.color-container');
+
+        function getRandomHexColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        const numColors = 10000; // 10,000 colors
+
+        for (let i = 0; i < numColors; i++) {
+            const hex = getRandomHexColor();
+            const colorBox = document.createElement('div');
+            colorBox.classList.add('color-box');
+            colorBox.style.backgroundColor = hex;
+            colorBox.title = hex;
+            colorBox.addEventListener('click', () => {
+                navigator.clipboard.writeText(hex)
+                    .then(() => {
+                        alert("Hex code copied to clipboard: " + hex);
+                    })
+                    .catch(err => {
+                        console.error('Failed to copy: ', err);
+                    });
+            });
+            colorContainer.appendChild(colorBox);
+        }
+    </script>
+
+</body>
+
+</html>
